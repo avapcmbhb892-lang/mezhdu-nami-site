@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const path = require("path");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -8,6 +9,8 @@ app.use(cors());
 app.use(express.json());
 
 const messages = [];
+
+app.use(express.static(path.join(__dirname)));
 
 app.get("/api/health", (req, res) => {
   res.json({
@@ -45,13 +48,6 @@ app.post("/api/messages", (req, res) => {
   });
 });
 
-app.get("/", (req, res) => {
-  res.json({
-    name: "Между нами",
-    status: "online"
-  });
-});
-
 app.listen(PORT, "0.0.0.0", () => {
-  console.log(`Между нами API запущен на порту ${PORT}`);
+  console.log(`Между нами запущен на порту ${PORT}`);
 });
