@@ -1,0 +1,655 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#0b0812">
+<title>Между нами</title>
+
+<style>
+*{box-sizing:border-box}
+:root{
+  --bg:#0b0812;
+  --bg2:#110c1b;
+  --card:rgba(29,20,42,.78);
+  --card2:rgba(38,26,53,.82);
+  --text:#f6efff;
+  --muted:#a99eb6;
+  --purple:#9b6cff;
+  --purple2:#c49cff;
+  --pink:#ff79b8;
+  --line:rgba(255,255,255,.08);
+  --shadow:0 20px 60px rgba(0,0,0,.35);
+}
+
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  min-height:100vh;
+  background:
+    radial-gradient(circle at 20% 0%,rgba(142,88,255,.18),transparent 32%),
+    radial-gradient(circle at 90% 20%,rgba(255,80,170,.10),transparent 30%),
+    var(--bg);
+  color:var(--text);
+  font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+  overflow-x:hidden;
+}
+
+body:before{
+  content:"";
+  position:fixed;
+  inset:0;
+  pointer-events:none;
+  opacity:.22;
+  background-image:
+    radial-gradient(circle at 20% 30%,#fff 0 1px,transparent 1px),
+    radial-gradient(circle at 70% 65%,#fff 0 1px,transparent 1px),
+    radial-gradient(circle at 85% 15%,#fff 0 1px,transparent 1px),
+    radial-gradient(circle at 35% 85%,#fff 0 1px,transparent 1px);
+  background-size:170px 170px,230px 230px,310px 310px,260px 260px;
+}
+
+.app{
+  width:min(100%,760px);
+  margin:auto;
+  padding:20px 16px 110px;
+}
+
+.top{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:8px 2px 22px;
+}
+
+.logo{
+  display:flex;
+  align-items:center;
+  gap:11px;
+}
+
+.logo-icon{
+  width:43px;
+  height:43px;
+  border-radius:15px;
+  display:grid;
+  place-items:center;
+  background:linear-gradient(135deg,#8c5cff,#c078ff);
+  box-shadow:0 10px 35px rgba(143,91,255,.3);
+  font-size:21px;
+}
+
+.logo-title{
+  font-size:18px;
+  font-weight:750;
+  letter-spacing:-.4px;
+}
+
+.logo-sub{
+  color:var(--muted);
+  font-size:11px;
+  margin-top:2px;
+}
+
+.avatar{
+  width:42px;
+  height:42px;
+  border-radius:50%;
+  border:1px solid var(--line);
+  background:var(--card2);
+  display:grid;
+  place-items:center;
+  font-size:18px;
+}
+
+.hero{
+  position:relative;
+  overflow:hidden;
+  padding:31px 25px;
+  border:1px solid var(--line);
+  border-radius:28px;
+  background:
+    linear-gradient(135deg,rgba(47,31,68,.92),rgba(22,15,31,.94));
+  box-shadow:var(--shadow);
+  animation:up .55s ease both;
+}
+
+.hero:after{
+  content:"";
+  position:absolute;
+  width:180px;
+  height:180px;
+  right:-70px;
+  top:-70px;
+  border-radius:50%;
+  background:rgba(157,101,255,.18);
+  filter:blur(10px);
+}
+
+.kicker{
+  color:var(--purple2);
+  font-size:12px;
+  font-weight:700;
+  letter-spacing:.5px;
+  margin-bottom:11px;
+}
+
+.hero h1{
+  margin:0;
+  font-size:clamp(31px,8vw,49px);
+  line-height:1.02;
+  letter-spacing:-1.8px;
+}
+
+.hero p{
+  max-width:540px;
+  margin:15px 0 21px;
+  color:#bdb2c9;
+  line-height:1.55;
+  font-size:14px;
+}
+
+.hero button{
+  border:0;
+  color:white;
+  font-weight:700;
+  padding:13px 18px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#8d5cff,#b06fff);
+  box-shadow:0 10px 30px rgba(140,91,255,.25);
+  cursor:pointer;
+}
+
+.section-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin:28px 3px 13px;
+}
+
+.section-head h2{
+  margin:0;
+  font-size:18px;
+}
+
+.section-head span{
+  color:var(--muted);
+  font-size:12px;
+}
+
+.moods{
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  gap:9px;
+}
+
+.mood{
+  border:1px solid var(--line);
+  background:var(--card);
+  color:var(--text);
+  padding:13px 5px;
+  border-radius:17px;
+  cursor:pointer;
+  transition:.2s;
+}
+
+.mood:active,.mood.active{
+  transform:translateY(-2px);
+  border-color:rgba(169,119,255,.5);
+  background:rgba(104,69,145,.35);
+}
+
+.mood b{
+  display:block;
+  font-size:20px;
+  margin-bottom:5px;
+}
+
+.mood small{
+  color:var(--muted);
+  font-size:10px;
+}
+
+.message{
+  border:1px solid var(--line);
+  background:var(--card);
+  border-radius:22px;
+  padding:18px;
+  margin-bottom:11px;
+  backdrop-filter:blur(14px);
+  animation:up .4s ease both;
+}
+
+.message-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:11px;
+}
+
+.mood-tag{
+  color:#d4baff;
+  background:rgba(151,101,255,.12);
+  padding:6px 9px;
+  border-radius:9px;
+  font-size:10px;
+}
+
+.time{
+  color:#766b81;
+  font-size:10px;
+}
+
+.message p{
+  margin:0;
+  color:#e6deeb;
+  line-height:1.55;
+  font-size:14px;
+}
+
+.actions{
+  display:flex;
+  gap:8px;
+  margin-top:14px;
+}
+
+.action{
+  border:1px solid var(--line);
+  background:rgba(255,255,255,.025);
+  color:#9e91aa;
+  border-radius:10px;
+  padding:7px 10px;
+  font-size:11px;
+}
+
+.cards{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:11px;
+}
+
+.feature{
+  min-height:130px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  padding:17px;
+  background:linear-gradient(145deg,rgba(35,25,49,.9),rgba(19,13,27,.9));
+  cursor:pointer;
+  transition:.2s;
+}
+
+.feature:active{transform:scale(.98)}
+
+.feature-icon{font-size:23px;margin-bottom:13px}
+.feature h3{font-size:14px;margin:0 0 6px}
+.feature p{font-size:11px;color:var(--muted);line-height:1.4;margin:0}
+
+.bottom{
+  position:fixed;
+  z-index:10;
+  left:50%;
+  bottom:12px;
+  transform:translateX(-50%);
+  width:min(calc(100% - 24px),620px);
+  display:grid;
+  grid-template-columns:repeat(4,1fr);
+  padding:7px;
+  gap:4px;
+  border:1px solid var(--line);
+  border-radius:21px;
+  background:rgba(18,12,26,.88);
+  backdrop-filter:blur(22px);
+  box-shadow:0 12px 45px rgba(0,0,0,.45);
+}
+
+.nav{
+  border:0;
+  background:transparent;
+  color:#817688;
+  border-radius:15px;
+  padding:8px 3px;
+  font-size:9px;
+  cursor:pointer;
+}
+
+.nav span{
+  display:block;
+  font-size:18px;
+  margin-bottom:3px;
+}
+
+.nav.active{
+  color:#d7bdff;
+  background:rgba(142,91,255,.13);
+}
+
+.modal{
+  position:fixed;
+  z-index:30;
+  inset:0;
+  display:none;
+  align-items:flex-end;
+  justify-content:center;
+  padding:15px;
+  background:rgba(4,2,7,.7);
+  backdrop-filter:blur(8px);
+}
+
+.modal.open{display:flex}
+
+.sheet{
+  width:min(100%,600px);
+  border:1px solid var(--line);
+  border-radius:27px;
+  padding:21px;
+  background:#171020;
+  box-shadow:var(--shadow);
+  animation:sheet .3s ease;
+}
+
+.sheet-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:16px;
+}
+
+.sheet h2{margin:0;font-size:19px}
+
+.close{
+  border:0;
+  background:rgba(255,255,255,.06);
+  color:#aaa;
+  width:34px;
+  height:34px;
+  border-radius:11px;
+  cursor:pointer;
+}
+
+textarea{
+  width:100%;
+  min-height:135px;
+  resize:none;
+  border:1px solid var(--line);
+  outline:0;
+  border-radius:17px;
+  padding:15px;
+  background:#0f0a16;
+  color:white;
+  font:inherit;
+}
+
+textarea:focus{border-color:rgba(157,105,255,.6)}
+
+.send{
+  width:100%;
+  border:0;
+  margin-top:10px;
+  padding:14px;
+  border-radius:15px;
+  background:linear-gradient(135deg,#8d5cff,#b06fff);
+  color:white;
+  font-weight:700;
+  cursor:pointer;
+}
+
+.empty{
+  color:var(--muted);
+  text-align:center;
+  padding:30px 10px;
+  font-size:13px;
+}
+
+@keyframes up{
+  from{opacity:0;transform:translateY(12px)}
+  to{opacity:1;transform:none}
+}
+@keyframes sheet{
+  from{opacity:0;transform:translateY(30px)}
+  to{opacity:1;transform:none}
+}
+
+@media(max-width:430px){
+  .app{padding-left:12px;padding-right:12px}
+  .hero{padding:27px 21px}
+  .moods{gap:6px}
+  .cards{gap:8px}
+}
+</style>
+</head>
+
+<body>
+
+<div class="app">
+
+  <header class="top">
+    <div class="logo">
+      <div class="logo-icon">✦</div>
+      <div>
+        <div class="logo-title">Между нами</div>
+        <div class="logo-sub">место, где можно быть собой</div>
+      </div>
+    </div>
+    <div class="avatar">♡</div>
+  </header>
+
+  <main>
+
+    <section class="hero">
+      <div class="kicker">МЕЖДУ СТРОК</div>
+      <h1>Иногда всё,<br>что нужно —<br>быть услышанным.</h1>
+      <p>
+        Здесь можно оставить мысль, которую сложно сказать вслух.
+        Без лишнего шума. Просто между нами.
+      </p>
+      <button onclick="openModal()">✎ Написать мысль</button>
+    </section>
+
+    <div class="section-head">
+      <h2>Как ты сегодня?</h2>
+      <span id="moodText">выбери настроение</span>
+    </div>
+
+    <section class="moods">
+      <button class="mood" onclick="setMood(this,'спокойно')">
+        <b>🌙</b><small>спокойно</small>
+      </button>
+      <button class="mood" onclick="setMood(this,'грустно')">
+        <b>🌧️</b><small>грустно</small>
+      </button>
+      <button class="mood" onclick="setMood(this,'тепло')">
+        <b>🌸</b><small>тепло</small>
+      </button>
+      <button class="mood" onclick="setMood(this,'тревожно')">
+        <b>☁️</b><small>тревожно</small>
+      </button>
+    </section>
+
+    <div class="section-head">
+      <h2>Между нами</h2>
+      <span>последние мысли</span>
+    </div>
+
+    <section id="messages">
+      <div class="message">
+        <div class="message-top">
+          <span class="mood-tag">🌙 спокойно</span>
+          <span class="time">только что</span>
+        </div>
+        <p>Иногда хочется просто поговорить с кем-нибудь, не объясняя сначала, почему тебе тяжело.</p>
+        <div class="actions">
+          <button class="action">♡ 12</button>
+          <button class="action">💬 ответить</button>
+        </div>
+      </div>
+
+      <div class="message">
+        <div class="message-top">
+          <span class="mood-tag">🌸 тепло</span>
+          <span class="time">недавно</span>
+        </div>
+        <p>Берегите людей, рядом с которыми можно молчать и всё равно чувствовать себя понятым.</p>
+        <div class="actions">
+          <button class="action">♡ 8</button>
+          <button class="action">💬 ответить</button>
+        </div>
+      </div>
+    </section>
+
+    <div class="section-head">
+      <h2>Загляни сюда</h2>
+    </div>
+
+    <section class="cards">
+      <article class="feature">
+        <div class="feature-icon">📖</div>
+        <h3>Между строк</h3>
+        <p>Истории, мысли и слова, которые иногда попадают прямо в сердце.</p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🌹</div>
+        <h3>Поддержка</h3>
+        <p>Тёплые слова для тех дней, когда их особенно не хватает.</p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">🍓</div>
+        <h3>Разговор</h3>
+        <p>Пространство для общения без необходимости казаться кем-то другим.</p>
+      </article>
+
+      <article class="feature">
+        <div class="feature-icon">✨</div>
+        <h3>Моё пространство</h3>
+        <p>Твои мысли, настроение и маленькие моменты.</p>
+      </article>
+    </section>
+
+  </main>
+</div>
+
+<nav class="bottom">
+  <button class="nav active"><span>⌂</span>Главная</button>
+  <button class="nav"><span>♡</span>Мысли</button>
+  <button class="nav" onclick="openModal()"><span>＋</span>Написать</button>
+  <button class="nav"><span>♙</span>Профиль</button>
+</nav>
+
+<div class="modal" id="modal" onclick="closeOutside(event)">
+  <div class="sheet">
+    <div class="sheet-head">
+      <h2>Оставить мысль</h2>
+      <button class="close" onclick="closeModal()">×</button>
+    </div>
+
+    <textarea id="messageInput" maxlength="2000"
+      placeholder="Напиши то, что сейчас между строк..."></textarea>
+
+    <button class="send" onclick="sendMessage()">Опубликовать</button>
+  </div>
+</div>
+
+<script>
+const API = "/api";
+let selectedMood = "neutral";
+
+function setMood(el,mood){
+  document.querySelectorAll(".mood").forEach(x=>x.classList.remove("active"));
+  el.classList.add("active");
+  selectedMood=mood;
+  document.getElementById("moodText").textContent=mood;
+}
+
+function openModal(){
+  document.getElementById("modal").classList.add("open");
+  setTimeout(()=>document.getElementById("messageInput").focus(),150);
+}
+
+function closeModal(){
+  document.getElementById("modal").classList.remove("open");
+}
+
+function closeOutside(e){
+  if(e.target.id==="modal") closeModal();
+}
+
+async function sendMessage(){
+  const input=document.getElementById("messageInput");
+  const text=input.value.trim();
+
+  if(!text){
+    input.focus();
+    return;
+  }
+
+  try{
+    const response=await fetch(API+"/messages",{
+      method:"POST",
+      headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({
+        text,
+        mood:selectedMood
+      })
+    });
+
+    if(!response.ok) throw new Error("API error");
+
+    input.value="";
+    closeModal();
+    await loadMessages();
+
+  }catch(error){
+    alert("Не удалось отправить мысль. Проверь соединение с сервером.");
+  }
+}
+
+function moodIcon(mood){
+  return {
+    спокойно:"🌙",
+    грустно:"🌧️",
+    тепло:"🌸",
+    тревожно:"☁️"
+  }[mood] || "✦";
+}
+
+function escapeHTML(text){
+  const div=document.createElement("div");
+  div.textContent=text;
+  return div.innerHTML;
+}
+
+async function loadMessages(){
+  try{
+    const response=await fetch(API+"/messages");
+    if(!response.ok) return;
+
+    const data=await response.json();
+    if(!Array.isArray(data) || !data.length) return;
+
+    const box=document.getElementById("messages");
+
+    box.innerHTML=data.map(m=>`
+      <div class="message">
+        <div class="message-top">
+          <span class="mood-tag">${moodIcon(m.mood)} ${escapeHTML(m.mood)}</span>
+          <span class="time">сейчас</span>
+        </div>
+        <p>${escapeHTML(m.text)}</p>
+        <div class="actions">
+          <button class="action">♡</button>
+          <button class="action">💬 ответить</button>
+        </div>
+      </div>
+    `).join("");
+
+  }catch(error){
+    console.log("API недоступен:",error);
+  }
+}
+
+loadMessages();
+</script>
+
+</body>
+</html>
